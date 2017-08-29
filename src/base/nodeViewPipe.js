@@ -18,12 +18,13 @@
 import * as THREE from 'three';
 
 import NodeView from './nodeView';
+import NodeViewStandard from './nodeViewStandard';
 import NodeNameView from './nodeNameView';
 import GlobalStyles from '../globalStyles';
 
 const radius = 16;
 
-class NodeViewStandard extends NodeView {
+class NodeViewPipe extends NodeViewStandard {
   constructor (service) {
     super(service);
 
@@ -85,4 +86,4 @@ class NodeViewStandard extends NodeView {
   }
 }
 
-export default NodeViewStandard;
+export default NodeViewPipe;

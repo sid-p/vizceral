@@ -1,23 +1,12 @@
 /**
  *
- *  Copyright 2016 Netflix, Inc.
- *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
  *
  */
 import FocusedNodeView from '../focused/focusedNodeView';
 import Node from '../base/node';
 import NodeViewStandard from '../base/nodeViewStandard';
+import NodeViewStorage from '../base/nodeViewStorage';
+import NodeViewPipe from '../base/nodeViewPipe';
 
 class RegionNode extends Node {
   constructor (node) {
@@ -34,12 +23,25 @@ class RegionNode extends Node {
     return true;
   }
 
+  findViewFor () {
+    switch (this.node_type) {
+    case 'service':
+      return new NodeViewStandard(this);
+    case 'storage':
+      return new NodeViewStorage(this);
+    case 'pipe':
+      return new NodeViewPipe(this);
+    default:
+      return new NodeViewStandard(this);
+    }
+  }
+
   render () {
     // Set the default view renderer
     if (this.nodeView === 'focused') {
       this.view = new FocusedNodeView(this);
     } else {
-      this.view = new NodeViewStandard(this);
+      this.view = this.findViewFor();
     }
   }
 }
