@@ -264,4 +264,16 @@ class NodeView extends BaseView {
   }
 }
 
+  static getPipeGeometry (radius) {
+    return getOrSet(innerCircleGeometries, radius, () => {
+      return new THREE.PlaneGeometry(49, 20, 2);
+    });
+  }
+
+  static getStorageGeometry (radius) {
+    return getOrSet(innerCircleGeometries, radius, () => {
+      return new THREE.PlaneGeometry(46, 46, 2);
+    });
+  }
+
 export default NodeView;
