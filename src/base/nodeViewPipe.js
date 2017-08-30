@@ -27,13 +27,6 @@ const radius = 16;
 class NodeViewPipe extends NodeViewStandard {
   constructor (service) {
     super(service);
-
-    this.setShape(service);
-    this.refreshNotices();
-
-    // Add the service name
-    this.nameView = this.getNameView();
-    this.showLabel(this.object.options.showLabel);
   }
 
   getNameView () {
@@ -45,8 +38,8 @@ class NodeViewPipe extends NodeViewStandard {
 
     this.dotColor = GlobalStyles.getColorTrafficRGBA(this.object.getClass());
     this.dotMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.dotColor.r, this.dotColor.g, this.dotColor.b), transparent: true, opacity: this.dotColor.a });
-
-    this.meshes.innerCircle = this.addChildElement(NodeView.getPipeGeometry(radius), this.borderMaterial);
+    this.meshes.outerBorder = this.addChildElement(new THREE.BoxGeometry(6 * radius, 2 * radius, 0), this.borderMaterial);
+    this.meshes.innerCircle = this.addChildElement(new THREE.BoxGeometry(5.4 * radius, 1.8 * radius, 0), this.innerCircleMaterial);
     this.meshes.noticeDot = this.addChildElement(NodeView.getNoticeDotGeometry(radius), this.dotMaterial);
   }
 
