@@ -264,14 +264,61 @@ class NodeView extends BaseView {
   }
 
   static getPipeGeometry (radius) {
-    return getOrSet(innerCircleGeometries, radius, () => {
-      return new THREE.PlaneGeometry(49, 20, 2);
-    });
+    return getOrSet(outerBorderGeometries, radius, () => {
+       const ctx = new THREE.Shape();
+       var x = -25;
+       var y = -10;
+       var width = 50;
+       var height = 20;
+       var r = 10;
+
+       ctx.moveTo( x, y + r );
+       ctx.lineTo( x, y + height - r );
+       ctx.quadraticCurveTo( x, y + height, x + r, y + height );
+       ctx.lineTo( x + width - r, y + height );
+       ctx.quadraticCurveTo( x + width, y + height, x + width, y + height - r );
+       ctx.lineTo( x + width, y + r );
+       ctx.quadraticCurveTo( x + width, y, x + width - r, y );
+       ctx.lineTo( x + r, y );
+       ctx.quadraticCurveTo( x, y, x, y + r );
+
+       return new THREE.ShapeGeometry(ctx);
+     });
   }
 
   static getStorageGeometry (radius) {
     return getOrSet(innerCircleGeometries, radius, () => {
-      return new THREE.PlaneGeometry(46, 46, 2);
+        var shape = new THREE.Shape();
+        var dx = -30;
+        var dy = -30;
+
+        shape.moveTo(dx + 4, dy + 0);
+        shape.lineTo(dx + 56, dy + 0);
+        shape.lineTo(dx + 60, dy + 8);
+        shape.lineTo(dx + 60, dy + 12);
+        shape.lineTo(dx + 56, dy + 18);
+        shape.lineTo(dx + 56, dy + 22);
+        shape.lineTo(dx + 60, dy + 28);
+        shape.lineTo(dx + 60, dy + 32);
+        shape.lineTo(dx + 56, dy + 38);
+        shape.lineTo(dx + 56, dy + 42);
+        shape.lineTo(dx + 60, dy + 48);
+        shape.lineTo(dx + 60, dy + 52);
+        shape.lineTo(dx + 56, dy + 60);
+        shape.lineTo(dx + 4, dy + 60);
+        shape.lineTo(dx + 0, dy + 52);
+        shape.lineTo(dx + 0, dy + 48);
+        shape.lineTo(dx + 4, dy + 42);
+        shape.lineTo(dx + 4, dy + 38);
+        shape.lineTo(dx + 0, dy + 32);
+        shape.lineTo(dx + 0, dy + 28);
+        shape.lineTo(dx + 4, dy + 22);
+        shape.lineTo(dx + 4, dy + 18);
+        shape.lineTo(dx + 0, dy + 12);
+        shape.lineTo(dx + 0, dy + 8);
+        shape.lineTo(dx + 4, dy + 0);
+      
+        return new THREE.ShapeGeometry(shape);
     });
   }
 }
