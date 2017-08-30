@@ -262,7 +262,6 @@ class NodeView extends BaseView {
       return new THREE.ShapeGeometry(noticeShape, curveSegments);
     });
   }
-}
 
   static getPipeGeometry (radius) {
     return getOrSet(innerCircleGeometries, radius, () => {
@@ -275,5 +274,7 @@ class NodeView extends BaseView {
       return new THREE.PlaneGeometry(46, 46, 2);
     });
   }
+}
+
 
 export default NodeView;
