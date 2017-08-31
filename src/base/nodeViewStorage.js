@@ -60,8 +60,8 @@ class NodeViewStorage extends NodeViewStandard {
     dbshape.lineTo(dx + 0, dy + 12);
     dbshape.lineTo(dx + 0, dy + 8);
     dbshape.lineTo(dx + 4, dy + 0);
-
-    this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(dbshape, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color('rgb(66, 165, 69)'), transparent: true, opacity: this.dotColor.a }));
+    const fillcolor = (this.provisioned) ? new THREE.Color('rgb(66, 165, 69)') : new THREE.Color('rgb(50, 50, 50)');
+    this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(dbshape, 12), new THREE.MeshBasicMaterial({ color: fillcolor, transparent: true, opacity: this.dotColor.a }));
     /**/
 
     this.meshes.noticeDot = this.addChildElement(NodeView.getNoticeDotGeometry(radius), this.dotMaterial);
