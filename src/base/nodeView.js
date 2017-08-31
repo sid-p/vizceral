@@ -101,6 +101,8 @@ class NodeView extends BaseView {
   }
 
   refresh (force) {
+    console.log('refreshing');
+    console.log(this.object.name);
     // Refresh class
     if (this.object.classInvalidated || force) {
       this.object.classInvalidated = false;
@@ -117,7 +119,13 @@ class NodeView extends BaseView {
           this.innerCircleMaterial.color.set(this.donutInternalColorThree);
           this.meshes.innerCircle.geometry.colorsNeedUpdate = true;
         }
-        this.borderMaterial.color.setRGB(borderColor.r, borderColor.g, borderColor.b);
+        this.setProvisioned(this.object);
+        if (!this.provisioned) {
+          this.borderMaterial.color.setRGB(borderColor.r, borderColor.g, borderColor.b);
+        } else {
+          this.borderMaterial.color.setRGB(0, 255, 0);
+          this.borderMaterial.opacity = 1;
+        }
         this.meshes.outerBorder.geometry.colorsNeedUpdate = true;
         if (this.meshes.innerBorder) { this.meshes.innerBorder.geometry.colorsNeedUpdate = true; }
       }

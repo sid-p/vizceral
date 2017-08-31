@@ -230,6 +230,7 @@ class Vizceral extends EventEmitter {
 
   updateGraph (graph) {
     if (graph) {
+      console.log('updating graph');
       let currentGraphData = this.trafficData;
       let parentGraphData;
       graph.graphIndex.every((graphLevel) => {
@@ -252,6 +253,7 @@ class Vizceral extends EventEmitter {
    * @param {object} data The traffic data that matches the format in (https://github.com/Netflix/Vizceral/wiki/How-to-Use#graph-data-format)
    */
   updateData (trafficData) {
+    console.log('viz update traffic data');
     if (trafficData && trafficData.nodes) {
       this.trafficData = trafficData;
       this.rootGraphName = trafficData.name;
