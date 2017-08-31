@@ -62,7 +62,7 @@ class NodeViewPipe extends NodeViewStandard {
     ctx.lineTo(x + r, y);
     ctx.quadraticCurveTo(x, y, x, y + r);
 
-    this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(ctx, 12), this.borderMaterial);
+    this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(ctx, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color('rgb(66, 165, 69)'), transparent: true, opacity: this.dotColor.a }));
 
     /**/
 

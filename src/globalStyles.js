@@ -48,7 +48,7 @@ class GlobalStyles {
       colorLabelText: 'rgb(0, 0, 0)',
       colorDonutInternalColor: 'rgb(35, 35, 35)',
       colorDonutInternalColorHighlighted: 'rgb(255, 255, 255)',
-      colorConnectionLine: 'rgb(91, 91, 91)',
+      colorConnectionLine: 'rgb(210, 210, 210)',
       colorPageBackground: 'rgb(45, 45, 45)',
       colorPageBackgroundTransparent: 'rgba(45, 45, 45, 0)',
       colorBorderLines: 'rgb(137, 137, 137)',
