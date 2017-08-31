@@ -38,34 +38,34 @@ class NodeViewPipe extends NodeViewStandard {
 
     this.dotColor = GlobalStyles.getColorTrafficRGBA(this.object.getClass());
     this.dotMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.dotColor.r, this.dotColor.g, this.dotColor.b), transparent: true, opacity: this.dotColor.a });
-    
-    //this.meshes.outerBorder = this.addChildElement(new THREE.BoxGeometry(6 * radius, 2 * radius, 0), this.borderMaterial);
-    //this.meshes.innerCircle = this.addChildElement(new THREE.BoxGeometry(5.4 * radius, 1.8 * radius, 0), this.innerCircleMaterial);
-    
+
+    // this.meshes.outerBorder = this.addChildElement(new THREE.BoxGeometry(6 * radius, 2 * radius, 0), this.borderMaterial);
+    // this.meshes.innerCircle = this.addChildElement(new THREE.BoxGeometry(5.4 * radius, 1.8 * radius, 0), this.innerCircleMaterial);
+
     /**/
     this.meshes.outerBorder = this.addChildElement(new THREE.BoxGeometry(1, 1, 0), this.borderMaterial);
-    
-      const ctx = new THREE.Shape();
-      const x = -25;
-      const y = -10;
-      const width = 50;
-      const height = 20;
-      const r = 10;
 
-      ctx.moveTo(x, y + r);
-      ctx.lineTo(x, y + height - r);
-      ctx.quadraticCurveTo(x, y + height, x + r, y + height);
-      ctx.lineTo(x + width - r, y + height);
-      ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - r);
-      ctx.lineTo(x + width, y + r);
-      ctx.quadraticCurveTo(x + width, y, x + width - r, y);
-      ctx.lineTo(x + r, y);
-      ctx.quadraticCurveTo(x, y, x, y + r);
-    
-      this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(ctx, curveSegments), this.innerCircleMaterial);
-    
+    const ctx = new THREE.Shape();
+    const x = -60;
+    const y = -20;
+    const width = 120;
+    const height = 40;
+    const r = 10;
+
+    ctx.moveTo(x, y + r);
+    ctx.lineTo(x, y + height - r);
+    ctx.quadraticCurveTo(x, y + height, x + r, y + height);
+    ctx.lineTo(x + width - r, y + height);
+    ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - r);
+    ctx.lineTo(x + width, y + r);
+    ctx.quadraticCurveTo(x + width, y, x + width - r, y);
+    ctx.lineTo(x + r, y);
+    ctx.quadraticCurveTo(x, y, x, y + r);
+
+    this.meshes.innerCircle = this.addChildElement(new THREE.ShapeGeometry(ctx, 12), this.borderMaterial);
+
     /**/
-    
+
     this.meshes.noticeDot = this.addChildElement(NodeView.getNoticeDotGeometry(radius), this.dotMaterial);
   }
 
