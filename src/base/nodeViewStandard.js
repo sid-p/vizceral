@@ -21,7 +21,7 @@ import NodeView from './nodeView';
 import NodeNameView from './nodeNameView';
 import GlobalStyles from '../globalStyles';
 
-const radius = 16;
+const radius = 32;
 
 class NodeViewStandard extends NodeView {
   constructor (service) {

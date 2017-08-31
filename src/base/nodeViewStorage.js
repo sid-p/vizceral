@@ -9,7 +9,7 @@ import NodeViewStandard from './nodeViewStandard';
 import NodeNameView from './nodeNameView';
 import GlobalStyles from '../globalStyles';
 
-const radius = 16;
+const radius = 32;
 
 class NodeViewStorage extends NodeViewStandard {
   constructor (service) {
