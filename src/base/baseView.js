@@ -27,8 +27,12 @@ class BaseView {
     this.dimmedLevel = 0.2;
     this.opacity = 1.0;
     this.dimmed = false;
-
+    this.setProvisioned(object);
     this.meshes = {};
+  }
+
+  setProvisioned (object) {
+    this.provisioned = (object && object.metadata && _.has(object.metadata, 'provisioned')) ? object.metadata.provisioned : true;
   }
 
   addInteractiveChild (child, context) {

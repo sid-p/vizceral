@@ -242,6 +242,13 @@ class Node extends GraphObject {
 
   update (stateNode) {
     this.classInvalidated = this.class !== stateNode.class;
+    if (this.metadata) {
+      if (stateNode.metadata) {
+        this.classInvalidated = this.classInvalidated || (this.metadata.provisioned !== stateNode.metadata.provisioned);
+      } else {
+        this.classInvalidated = true;
+      }
+    }
     _.assign(this, stateNode);
     this.notices = stateNode.notices;
     if (this.view) { this.view.refresh(false); }

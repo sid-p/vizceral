@@ -32,8 +32,8 @@ const arcMeterWidth = 15;
 function generateDisplayValue (value, format) {
   value = value || 0;
 
-  let displayValue = value;
-  if (format) { displayValue = numeral(value).format(format); }
+  let displayValue = value / 10;
+  if (format) { displayValue = numeral(value / 10).format(format); }
 
   // If we're hiding data, don't need to hide percentages
   if (__HIDE_DATA__ && displayValue.indexOf('%') === -1) {

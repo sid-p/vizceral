@@ -44,13 +44,20 @@ class NodeView extends BaseView {
   constructor (node) {
     super(node);
     this.loaded = node.loaded;
-
+    console.log(node.name);
     this.donutInternalColor = GlobalStyles.rgba.colorDonutInternalColor;
     this.donutInternalColorThree = new THREE.Color(this.donutInternalColor.r, this.donutInternalColor.g, this.donutInternalColor.b);
 
     this.borderColor = GlobalStyles.getColorTrafficRGBA(node.getClass());
-    this.borderMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.borderColor.r, this.borderColor.g, this.borderColor.b), transparent: true, opacity: this.borderColor.a });
+    this.borderMaterial = this.getBorderColor();
     this.innerCircleMaterial = new THREE.MeshBasicMaterial({ color: this.donutInternalColorThree, transparent: true });
+  }
+
+  getBorderColor () {
+    if (this.provisioned) {
+      return new THREE.MeshBasicMaterial({ color: new THREE.Color(0, 255, 0), transparent: true, opacity: this.borderColor.a });
+    }
+    return new THREE.MeshBasicMaterial({ color: new THREE.Color(this.borderColor.r, this.borderColor.g, this.borderColor.b), transparent: true, opacity: 0.2 });
   }
 
   setOpacity (opacity) {
@@ -94,6 +101,8 @@ class NodeView extends BaseView {
   }
 
   refresh (force) {
+    console.log('refreshing');
+    console.log(this.object.name);
     // Refresh class
     if (this.object.classInvalidated || force) {
       this.object.classInvalidated = false;
@@ -110,7 +119,13 @@ class NodeView extends BaseView {
           this.innerCircleMaterial.color.set(this.donutInternalColorThree);
           this.meshes.innerCircle.geometry.colorsNeedUpdate = true;
         }
-        this.borderMaterial.color.setRGB(borderColor.r, borderColor.g, borderColor.b);
+        this.setProvisioned(this.object);
+        if (!this.provisioned) {
+          this.borderMaterial.color.setRGB(borderColor.r, borderColor.g, borderColor.b);
+        } else {
+          this.borderMaterial.color.setRGB(0, 255, 0);
+          this.borderMaterial.opacity = 1;
+        }
         this.meshes.outerBorder.geometry.colorsNeedUpdate = true;
         if (this.meshes.innerBorder) { this.meshes.innerBorder.geometry.colorsNeedUpdate = true; }
       }
@@ -262,6 +277,66 @@ class NodeView extends BaseView {
       return new THREE.ShapeGeometry(noticeShape, curveSegments);
     });
   }
+
+  static getPipeGeometry (radius) {
+    return getOrSet(outerBorderGeometries, radius, () => {
+      const ctx = new THREE.Shape();
+      const x = -25;
+      const y = -10;
+      const width = 50;
+      const height = 20;
+      const r = 10;
+
+      ctx.moveTo(x, y + r);
+      ctx.lineTo(x, y + height - r);
+      ctx.quadraticCurveTo(x, y + height, x + r, y + height);
+      ctx.lineTo(x + width - r, y + height);
+      ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - r);
+      ctx.lineTo(x + width, y + r);
+      ctx.quadraticCurveTo(x + width, y, x + width - r, y);
+      ctx.lineTo(x + r, y);
+      ctx.quadraticCurveTo(x, y, x, y + r);
+
+      return new THREE.ShapeGeometry(ctx);
+    });
+  }
+
+  static getStorageGeometry (radius) {
+    return getOrSet(innerCircleGeometries, radius, () => {
+      const shape = new THREE.Shape();
+      const dx = -30;
+      const dy = -30;
+
+      shape.moveTo(dx + 4, dy + 0);
+      shape.lineTo(dx + 56, dy + 0);
+      shape.lineTo(dx + 60, dy + 8);
+      shape.lineTo(dx + 60, dy + 12);
+      shape.lineTo(dx + 56, dy + 18);
+      shape.lineTo(dx + 56, dy + 22);
+      shape.lineTo(dx + 60, dy + 28);
+      shape.lineTo(dx + 60, dy + 32);
+      shape.lineTo(dx + 56, dy + 38);
+      shape.lineTo(dx + 56, dy + 42);
+      shape.lineTo(dx + 60, dy + 48);
+      shape.lineTo(dx + 60, dy + 52);
+      shape.lineTo(dx + 56, dy + 60);
+      shape.lineTo(dx + 4, dy + 60);
+      shape.lineTo(dx + 0, dy + 52);
+      shape.lineTo(dx + 0, dy + 48);
+      shape.lineTo(dx + 4, dy + 42);
+      shape.lineTo(dx + 4, dy + 38);
+      shape.lineTo(dx + 0, dy + 32);
+      shape.lineTo(dx + 0, dy + 28);
+      shape.lineTo(dx + 4, dy + 22);
+      shape.lineTo(dx + 4, dy + 18);
+      shape.lineTo(dx + 0, dy + 12);
+      shape.lineTo(dx + 0, dy + 8);
+      shape.lineTo(dx + 4, dy + 0);
+
+      return new THREE.ShapeGeometry(shape);
+    });
+  }
 }
+
 
 export default NodeView;
